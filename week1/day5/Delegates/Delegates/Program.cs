@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Delegates
 {
@@ -7,7 +9,7 @@ namespace Delegates
         static void Main(string[] args)
         {
             // object initialization syntax
-            // if no params after MoviePlayer, zero-arg constructor "()" is assumed.
+            // if no parentheses after MoviePlayer, zero-arg constructor "()" is assumed.
             var player = new MoviePlayer
             {
                 CurrentMovie = "Lord of the Rings: The Fellowship of the Ring Extended Edition"
@@ -81,5 +83,71 @@ namespace Delegates
         // you give it when you try to call it.
 
         // don't confuse this with method overriding (inheritance).
+
+        static void Linq()
+        {
+            var x = new List<string>();
+            // I want to know the max length of those strings
+            int longestLength = x.Max(s => s.Length);
+
+            // LINQ methods we should know:
+            //  - Select (a mapping operation, will take each element and change it into something else)
+            var firstCharacters = x.Select(s => s[0]);
+            //  - Average, Min, Max
+            //  - All (expects a bool returning lambda - checks that all elements meet some condition)
+            bool allShorterThan5Chars = x.All(s => s.Length < 5);
+            //  - Any (which works like All, but returns true if there's for ANY match, not ALL matches)
+            //  - Where (filters the sequence for only the elements that return true)
+            var onlyTheLongElements = x.Where(s => s.Length > 20);
+
+            // should also know that you can chain these together
+            bool b = x.Where(s => s.Length > 20)
+                .Select(s => s[0])
+                .All(c => c == 'a' || c == 'b');
+            // b will be true if every long element starts with a or b.
+
+            // remember, LINQ uses "deferred execution" meaning it doesn't actually
+            // "run the loop" until you need the result.
+            List<char> listOfChars = firstCharacters.ToList();
+            //  - ToList is a LINQ method that will actually run the loop (if necessary)
+            //    and return you a proper List.
+            // all IEnumerable can do is get put in foreach loops
+            // and have LINQ methods called on it.
+        }
+
+        static void Finally()
+        {
+            try
+            {
+                // this code runs always
+                Console.WriteLine("try");
+                // until an exception in here
+
+                // if i'm opening resources that need to be cleaned up
+
+                // don't put cleanup code here because an exception beforehand might skip it.
+            }
+            catch(ArgumentException e)
+            {
+                // this code runs when there is a matching exception
+                // from inside the try block.
+
+                // only put ArgumentException-specific cleanup here
+            }
+            finally
+            {
+                // this code runs always, period,
+                // even if there was an uncaught exception in the try block.
+
+                // put general cleanup of "try" resources here
+            }
+
+            // we can even have try and finally without any catch.
+            // if you are using resources that you must clean up
+            // but any error really still needs to propagate up
+            // because you can't actually handle it.
+
+            // there is a "using statement" syntax that can replace try-finally sometimes.
+        }
     }
 }
