@@ -141,6 +141,8 @@ namespace Delegates
 
                 // put general cleanup of "try" resources here
             }
+            // don't put cleanup code here either
+            // because uncaught exceptions will skip it
 
             // we can even have try and finally without any catch.
             // if you are using resources that you must clean up
