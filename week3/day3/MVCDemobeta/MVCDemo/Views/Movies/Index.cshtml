@@ -1,0 +1,106 @@
+﻿@* razor comments (disappear when page is rendered) *@
+<!-- html comments (do make their way to the client) -->
+
+@* views can be loosely typed or strongly typed. *@
+@* strongly typed views accept one model with the defined type *@
+@* and then they can access its fields in a type-safe way. *@
+
+@* a view is strongly typed when it has the @model directive *@
+
+@model IEnumerable<MVCDemo.Models.Movie>
+
+@* @model defines what "Model" will be inside this view *@
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@* "razor expressions" *@
+@DateTime.Now
+@(1 + 1)
+@* a value, not a whole statement *@
+@* this will render that value onto the HTML "right here" on the page *@
+
+@* "razor blocks" are statements within braces, not single values. *@
+@* these don't inherently render to the page, they execute logic at time of page rendering *@
+@{
+    
+}
+
+@* @if, @while, @for, @foreach, familiar c# structures *@
+
+<p>
+    @* this is a tag helper *@
+    <a asp-action="Create" asp->Create New</a>
+</p>
+@*@foreach (var item in Model)
+{
+    item.Id = -item.Id;
+}*@
+@* this is really the controller's job to do logic but we can do it here if we must *@
+
+@* there's only one model per view. *@
+@* if you need more than one model, make a new model that contains the two you want. *@
+@* especially if this new model is only used on one page, we'll often call it a "viewmodel" *@
+@* which means, a model that's pretty much just for one view. *@
+
+@* 
+tag helpers
+
+a (anchor) tag helper, for links within the web application
+    attributes
+        asp-action="the action name"
+        asp-controller="the controller name" (defaults to same controller as this one)
+        asp-route="the defined name of the convention route to base this URL on" (defaults to default)
+        asp-route-id="the value of id to go in the URL"
+        asp-route-whatever-route-parameter="the value of that route parameter to go in the URL"
+    (@Html.RouteLink is the HTML helper counterpart)
+
+*@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @* this is an example of an "HTML helper" provided by the Razor engine *@
+                @Html.DisplayNameFor(model => model.Id)
+                @* output the name of a field *@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        @(1+1)
+        <tr>
+            <td>
+                @* output the value of a field as a string *@
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseDate)
+            </td>
+            <td>
+                @* HTML helper for creating a link to an action in the web app. *@
+                @*              link text,  action name,   route parameters*@
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @* each controller has one or more action methods, which typically are *@
+                @* one-to-one with pages from the client's perspective. *@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

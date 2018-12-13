@@ -58,5 +58,15 @@ namespace MVCDemo.Repositories
             DeleteMovie(movie.Id); // delete if exists
             CreateMovie(movie);
         }
+
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Movie> GetAllByCastMember(string cast)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

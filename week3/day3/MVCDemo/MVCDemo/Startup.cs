@@ -44,7 +44,7 @@ namespace MVCDemo
             // this says, when anyone wants the dbcontext MovieDBContext, get him one
             // using SQL Server and a connection string found in appsettings.json (Configuration).
             services.AddDbContext<MovieDBContext>(optionsBuilder => 
-                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("MoviesCodeFirstDB")));
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DB")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -67,11 +67,29 @@ namespace MVCDemo
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            // here in Startup.Configure is our global convention routing
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "cast",
+                    template: "Actors/{name}",
+                    defaults: new { controller = "Cast", action = "Index" });
+                // this following route was generated automatically
+                // one route is defined
+                // there's the base URL (in our case, something like https://localhost:12345
+                //   we ignore that part
+                // this route says, everything before the first slash will be understood
+                //   as the name of the controller (built-in "controller" variable)
+                // everything before the next slash will be understood as the name of the action method
+                //   (built-in "action" variable)
+                // everything after that slash will be put into a route parameter called "id"
+                // every route needs to set controller and action in some way
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                // if there's no id, that's fine, it's marked as optional with the ?
+                // if there's no action, it defaults to "Index"
+                // if there's no controller, it defaults to "Home"
             });
         }
     }
