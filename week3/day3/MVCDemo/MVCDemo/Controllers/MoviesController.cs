@@ -9,6 +9,10 @@ using MVCDemo.Repositories;
 
 namespace MVCDemo.Controllers
 {
+    // we can set attribute routing on whole controllers as well
+    // the syntax for attribute routing templates is a little different from
+    // that for convention-based routing in Startup.cs
+   [Route("Movie")]
     public class MoviesController : Controller
     {
         // we get a new Controller constructed for every request
@@ -28,6 +32,9 @@ namespace MVCDemo.Controllers
 
         // GET: Movies
         // show a table of all the movies
+        // (these attribute routes are "appended" with / to the controller's attribute route)
+        [Route("")]
+        [Route("Index")]
         public ActionResult Index()
         {
             // "View()" is a method on the base Controller class
@@ -39,6 +46,7 @@ namespace MVCDemo.Controllers
         // GET: Movies/Details/5
         // action methods get their parameters from
         //   route parameters, query string, request body
+        [Route("Details/{id}")]
         public ActionResult Details(int id)
         {
             var movie = Repo.GetById(id);
@@ -47,6 +55,10 @@ namespace MVCDemo.Controllers
 
         // GET: Movies/Create
         // for the client accessing the Create page
+        // (attributes that specify which "HTTP method" this action method responds to)
+        // [HttpGet] (GET method - default)
+        // [HttpPost] (POST method) - form submissions (by default)
+        [Route("Edit")]
         public ActionResult Create()
         {
             return View(); // strongly typed to Movie
@@ -56,7 +68,7 @@ namespace MVCDemo.Controllers
 
         // POST: Movies/Create
         // for the client submitting the form on the Create page
-        [HttpPost]
+        [HttpPost("Create")]
         [ValidateAntiForgeryToken]
         //public ActionResult Create(IFormCollection collection)
         public ActionResult Create(Movie newMovie)
@@ -102,6 +114,7 @@ namespace MVCDemo.Controllers
         }
 
         // GET: Movies/Edit/5
+        [Route("Edit/{id}")]
         public ActionResult Edit(int id)
         {
             var movie = Repo.GetById(id);
@@ -113,7 +126,7 @@ namespace MVCDemo.Controllers
         }
 
         // POST: Movies/Edit/5
-        [HttpPost]
+        [HttpPost("Edit/{id}")]
         [ValidateAntiForgeryToken]
         // id is coming via route parameter
         // movie is coming via request body
@@ -154,6 +167,7 @@ namespace MVCDemo.Controllers
         }
 
         // GET: Movies/Delete/5
+        [Route("Delete/{id}")]
         public ActionResult Delete(int id)
         {
             var movie = Repo.GetById(id);
@@ -168,7 +182,7 @@ namespace MVCDemo.Controllers
         }
 
         // POST: Movies/Delete/5
-        [HttpPost]
+        [HttpPost("Delete")]
         [ValidateAntiForgeryToken]
         // we don't actually use that formcollection, it's really just to distinguish
         // this method from the previous one for the C# compiler. (for ASP.NET, the HttpPost attr does that)
