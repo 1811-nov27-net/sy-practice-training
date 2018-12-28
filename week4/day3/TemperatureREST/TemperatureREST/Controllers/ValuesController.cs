@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TemperatureREST.Models;
 
 namespace TemperatureREST.Controllers
 {
@@ -23,9 +24,13 @@ namespace TemperatureREST.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<Dictionary<int, Temperature>> Get(int id)
         {
-            return "value";
+            return new Dictionary<int, Temperature>
+            {
+                [1] = new Temperature(),
+                [4] = new Temperature()
+            };
         }
 
         // POST api/values

@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace TemperatureREST.Models
 {
+    public enum TemperatureUnit
+    {
+        Fahrenheit, Celsius
+    }
+
     public class Temperature
     {
-        [Required]
+        //[Required]
         public int Id { get; set; }
 
         [Required]
@@ -16,6 +21,9 @@ namespace TemperatureREST.Models
 
         [Required]
         [Range(-200, 1000)]
-        public double CelsiusValue { get; set; }
+        public double Value { get; set; }
+
+        [Required]
+        public TemperatureUnit? Unit { get; set; }
     }
 }

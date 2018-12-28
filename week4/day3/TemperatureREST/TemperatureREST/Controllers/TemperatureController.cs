@@ -13,16 +13,34 @@ namespace TemperatureREST.Controllers
     public class TemperatureController : ControllerBase
     {
         // really we would use a DB, but for demo purposes, a static list
-        public static List<Temperature> Data = new List<Temperature>();
+        public static List<Temperature> Data = new List<Temperature>
+        {
+            new Temperature
+            {
+                Id = 1,
+                Time = DateTime.Now,
+                Value = 36,
+                Unit = TemperatureUnit.Celsius
+            }
+        };
 
         // GET: api/Temperature
         [HttpGet]
         // the return type can be just your type
         // or, ActionResult<YourType>, both will work, but the latter also allows you to
         // return error messages
-        public IEnumerable<Temperature> Get()
+        public ActionResult<IEnumerable<Temperature>> Get()
         {
-            return Data;
+            try
+            {
+                return Data;
+            }
+            catch (Exception ex)
+            {
+                // internal server error
+                // (but sending server exceptions blindly to the client is not good security)
+                return StatusCode(500, ex);
+            }
         }
 
         // GET: api/Temperature/5
@@ -42,10 +60,12 @@ namespace TemperatureREST.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Temperature value)
         {
+            /*
             if (ModelState.IsValid)
             {
                 return BadRequest();
             }
+            */
             Data.Add(value);
             return Ok();
         }
