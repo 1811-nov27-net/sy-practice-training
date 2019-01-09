@@ -936,11 +936,11 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "ExcelReadWriteCell",
-      "projectName": "ExcelReadWriteCell",
-      "projectPath": "E:\\Stuff\\Revature\\sy-practice-training\\week6\\day3\\ExcelReadWriteCell\\.local",
+      "projectUniqueName": "RecordingDemo",
+      "projectName": "RecordingDemo",
+      "projectPath": "E:\\Stuff\\Revature\\sy-practice-training\\week6\\day3\\RecordingDemo\\.local",
       "packagesPath": "C:\\Users\\Justin\\.nuget\\packages\\",
-      "outputPath": "E:\\Stuff\\Revature\\sy-practice-training\\week6\\day3\\ExcelReadWriteCell\\.local"
+      "outputPath": "E:\\Stuff\\Revature\\sy-practice-training\\week6\\day3\\RecordingDemo\\.local"
     },
     "frameworks": {
       "net461": {
