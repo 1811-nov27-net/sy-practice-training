@@ -1,0 +1,8 @@
+1. Extract excel produt details to order new products
+2. Note down the reference number(will get at the end of the order) of that produt for each and every order.
+3. Make note of status column as
+	i) Success- Successful product order
+	ii) Failed- If anything went wrong while ordering the product
+	iii) Invlid Data- If the Quantity or Cost centre detals are empty and make a note that which fields data 	missing
+Note: i) Use Product deatils.xlsx for ordering new produtcs
+         ii) Staff number and password should be same else will get Invalid details
